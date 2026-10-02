@@ -1,0 +1,145 @@
+{
+  "info": {
+    "_postman_id": "9b887c37-c6ed-43fe-b4bf-65c4f0f84cc1",
+    "name": "St.George API",
+    "description": "Complete API collection for St. George Sports Club. Set baseUrl before sending requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://127.0.0.1:8000/api"},
+    {"key": "token", "value": ""},
+    {"key": "id", "value": "1"}
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {"name": "Register member", "request": {"method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"name\": \"Test Member\",\n  \"email\": \"member@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"phone\": \"9876543210\",\n  \"address\": \"Kolkata\"\n}"}, "url":"{{baseUrl}}/register"}},
+        {"name": "Login", "event": [{"listen":"test","script":{"exec":["const response = pm.response.json();","if (response.token) pm.collectionVariables.set('token', response.token);"]}}], "request": {"method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"email\": \"member@example.com\",\n  \"password\": \"password123\"\n}"}, "url":"{{baseUrl}}/login"}},
+        {"name": "Current user", "request": {"method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url":"{{baseUrl}}/user"}}
+      ]
+    },
+    {"name":"Admin","item":[{"name":"Accept registration","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"id\": 1\n}"},"url":"{{baseUrl}}/accept-registration"}}]},
+    {"name":"Club","item":[
+      {"name":"Get all clubs","request":{"method":"GET","url":"{{baseUrl}}/club?per_page=15"}},
+      {"name":"Add club","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"St. George Sports Club\",\n  \"register_no\": \"SGSC-2026-001\",\n  \"description\": \"Community sports club\",\n  \"mission\": \"Promote sports\",\n  \"vision\": \"A stronger community\",\n  \"founded_year\": 2005,\n  \"address\": \"Kolkata\",\n  \"phone\": \"9876543210\",\n  \"email\": \"club@example.com\"\n}"},"url":"{{baseUrl}}/club"}},
+      {"name":"Get club","request":{"method":"GET","url":"{{baseUrl}}/club/{{id}}"}},
+      {"name":"Update club","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"St. George Sports Club Updated\"\n}"},"url":"{{baseUrl}}/club/{{id}}"}},
+      {"name":"Delete club","request":{"method":"DELETE","url":"{{baseUrl}}/club/{{id}}"}}
+    ]},
+    {"name":"Official Roles","item":[
+      {"name":"Get all roles","request":{"method":"GET","url":"{{baseUrl}}/official-roles"}},
+      {"name":"Add role","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"role_name\": \"Secretary\",\n  \"priority\": 2\n}"},"url":"{{baseUrl}}/official-roles"}},
+      {"name":"Get role","request":{"method":"GET","url":"{{baseUrl}}/official-roles/{{id}}"}},
+      {"name":"Update role","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"role_name\": \"General Secretary\",\n  \"priority\": 1\n}"},"url":"{{baseUrl}}/official-roles/{{id}}"}},
+      {"name":"Delete role","request":{"method":"DELETE","url":"{{baseUrl}}/official-roles/{{id}}"}}
+    ]},
+    {"name":"Official Members","item":[
+      {"name":"Get all officials","request":{"method":"GET","url":"{{baseUrl}}/official-members"}},
+      {"name":"Add official","request":{"method":"POST","body":{"mode":"formdata","formdata":[{"key":"role_id","value":"1","type":"text"},{"key":"name","value":"Jane Doe","type":"text"},{"key":"phone","value":"9876543210","type":"text"},{"key":"email","value":"jane@example.com","type":"text"},{"key":"description","value":"Club secretary","type":"text"},{"key":"year_start","value":"2026","type":"text"},{"key":"year_end","value":"2028","type":"text"},{"key":"status","value":"1","type":"text"},{"key":"photo","type":"file","src":""}]},"url":"{{baseUrl}}/official-members"}},
+      {"name":"Get official","request":{"method":"GET","url":"{{baseUrl}}/official-members/{{id}}"}},
+      {"name":"Update official","request":{"method":"PUT","body":{"mode":"formdata","formdata":[{"key":"name","value":"Jane Doe Updated","type":"text"}]},"url":"{{baseUrl}}/official-members/{{id}}"}},
+      {"name":"Delete official","request":{"method":"DELETE","url":"{{baseUrl}}/official-members/{{id}}"}}
+    ]},
+    {"name":"Sports","item":[
+      {"name":"Get all sports","request":{"method":"GET","url":"{{baseUrl}}/sports?per_page=15"}},
+      {"name":"Add sport","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Football\",\n  \"description\": \"Football activities\",\n  \"status\": true\n}"},"url":"{{baseUrl}}/sports"}},
+      {"name":"Get sport","request":{"method":"GET","url":"{{baseUrl}}/sports/{{id}}"}},
+      {"name":"Update sport","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Football Updated\"\n}"},"url":"{{baseUrl}}/sports/{{id}}"}},
+      {"name":"Delete sport","request":{"method":"DELETE","url":"{{baseUrl}}/sports/{{id}}"}}
+    ]},
+    {"name":"Teams","item":[
+      {"name":"Get all teams","request":{"method":"GET","url":"{{baseUrl}}/teams"}},
+      {"name":"Add team","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"sport_id\": 1,\n  \"name\": \"Senior Football Team\",\n  \"category\": \"Senior\",\n  \"coach_name\": \"Coach Name\",\n  \"description\": \"First team\"\n}"},"url":"{{baseUrl}}/teams"}},
+      {"name":"Get team","request":{"method":"GET","url":"{{baseUrl}}/teams/{{id}}"}},
+      {"name":"Update team","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Senior Team Updated\"\n}"},"url":"{{baseUrl}}/teams/{{id}}"}},
+      {"name":"Delete team","request":{"method":"DELETE","url":"{{baseUrl}}/teams/{{id}}"}}
+    ]},
+    {"name":"Players","item":[
+      {"name":"Get all players","request":{"method":"GET","url":"{{baseUrl}}/players"}},
+      {"name":"Add player","request":{"method":"POST","body":{"mode":"formdata","formdata":[{"key":"team_id","value":"1","type":"text"},{"key":"name","value":"Player Name","type":"text"},{"key":"jersey_number","value":"10","type":"text"},{"key":"position","value":"Forward","type":"text"},{"key":"age","value":"22","type":"text"},{"key":"bio","value":"Team striker","type":"text"},{"key":"photo","type":"file","src":""}]},"url":"{{baseUrl}}/players"}},
+      {"name":"Get player","request":{"method":"GET","url":"{{baseUrl}}/players/{{id}}"}},
+      {"name":"Update player","request":{"method":"PUT","body":{"mode":"formdata","formdata":[{"key":"name","value":"Player Updated","type":"text"}]},"url":"{{baseUrl}}/players/{{id}}"}},
+      {"name":"Delete player","request":{"method":"DELETE","url":"{{baseUrl}}/players/{{id}}"}}
+    ]},
+    {"name":"Event Type","item":[
+      {"name":"Get all event types","request":{"method":"GET","url":"{{baseUrl}}/event-type"}},
+      {"name":"Add event type","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Tournament\",\n  \"description\": \"Competitive club event\",\n  \"status\": true\n}"},"url":"{{baseUrl}}/event-type"}},
+      {"name":"Get event type","request":{"method":"GET","url":"{{baseUrl}}/event-type/{{id}}"}},
+      {"name":"Update event type","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Tournament Updated\",\n  \"status\": true\n}"},"url":"{{baseUrl}}/event-type/{{id}}"}},
+      {"name":"Delete event type","request":{"method":"DELETE","url":"{{baseUrl}}/event-type/{{id}}"}}
+    ]},
+    {"name":"Events","item":[
+      {"name":"Get all events","request":{"method":"GET","url":"{{baseUrl}}/events"}},
+      {"name":"Add event","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Club Football Cup\",\n  \"description\": \"Annual tournament\",\n  \"event_type_id\": 1,\n  \"sport_id\": 1,\n  \"event_date\": \"2026-11-01\",\n  \"event_time\": \"10:00:00\",\n  \"location\": \"Club Ground\",\n  \"status\": \"upcoming\",\n  \"team_ids\": [1, 2]\n}"},"url":"{{baseUrl}}/events"}},
+      {"name":"Get event","request":{"method":"GET","url":"{{baseUrl}}/events/{{id}}"}},
+      {"name":"Update event","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Club Football Cup Updated\",\n  \"event_type_id\": 1,\n  \"sport_id\": 1,\n  \"event_date\": \"2026-11-02\",\n  \"team_ids\": [1]\n}"},"url":"{{baseUrl}}/events/{{id}}"}},
+      {"name":"Sync event teams","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"team_ids\": [1, 2]\n}"},"url":"{{baseUrl}}/events/{{id}}/teams"}},
+      {"name":"Delete event","request":{"method":"DELETE","url":"{{baseUrl}}/events/{{id}}"}}
+    ]},
+    {"name":"Memberships","item":[
+      {"name":"Get all memberships","request":{"method":"GET","url":"{{baseUrl}}/memberships"}},
+      {"name":"Add membership","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Annual Membership\",\n  \"fee\": 1500,\n  \"duration\": 12,\n  \"benefits\": \"Ground access and events\",\n  \"status\": true\n}"},"url":"{{baseUrl}}/memberships"}},
+      {"name":"Get membership","request":{"method":"GET","url":"{{baseUrl}}/memberships/{{id}}"}},
+      {"name":"Update membership","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"fee\": 1800\n}"},"url":"{{baseUrl}}/memberships/{{id}}"}},
+      {"name":"Delete membership","request":{"method":"DELETE","url":"{{baseUrl}}/memberships/{{id}}"}}
+    ]},
+    {"name":"Membership Applications","item":[
+      {"name":"Get all applications","request":{"method":"GET","url":"{{baseUrl}}/membership-applications"}},
+      {"name":"Apply for membership","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"membership_id\": 1,\n  \"name\": \"Applicant Name\",\n  \"email\": \"applicant@example.com\",\n  \"phone\": \"9876543210\",\n  \"address\": \"Kolkata\",\n  \"status\": \"pending\"\n}"},"url":"{{baseUrl}}/membership-applications"}},
+      {"name":"Get application","request":{"method":"GET","url":"{{baseUrl}}/membership-applications/{{id}}"}},
+      {"name":"Update application status","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"status\": \"approved\"\n}"},"url":"{{baseUrl}}/membership-applications/{{id}}"}},
+      {"name":"Delete application","request":{"method":"DELETE","url":"{{baseUrl}}/membership-applications/{{id}}"}}
+    ]},
+    {"name":"Types and Activities","item":[
+      {"name":"Get all types","request":{"method":"GET","url":"{{baseUrl}}/types"}},
+      {"name":"Add type","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"activity\"\n}"},"url":"{{baseUrl}}/types"}},
+      {"name":"Get type","request":{"method":"GET","url":"{{baseUrl}}/types/{{id}}"}},
+      {"name":"Update type","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"social-activity\"\n}"},"url":"{{baseUrl}}/types/{{id}}"}},
+      {"name":"Delete type","request":{"method":"DELETE","url":"{{baseUrl}}/types/{{id}}"}},
+      {"name":"Get all activities","request":{"method":"GET","url":"{{baseUrl}}/activities"}},
+      {"name":"Add activity","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Fitness Camp\",\n  \"type_id\": 1,\n  \"description\": \"Weekend fitness session\",\n  \"date\": \"2026-10-10\",\n  \"status\": true\n}"},"url":"{{baseUrl}}/activities"}},
+      {"name":"Get activity","request":{"method":"GET","url":"{{baseUrl}}/activities/{{id}}"}},
+      {"name":"Update activity","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Fitness Camp Updated\"\n}"},"url":"{{baseUrl}}/activities/{{id}}"}},
+      {"name":"Delete activity","request":{"method":"DELETE","url":"{{baseUrl}}/activities/{{id}}"}}
+    ]},
+    {"name":"Registrations and Financial Transactions","item":[
+      {"name":"Get all registrations","request":{"method":"GET","url":"{{baseUrl}}/registrations"}},
+      {"name":"Add registration","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"user_id\": 1,\n  \"type_id\": 1,\n  \"reference_id\": 1,\n  \"registered_at\": \"2026-10-01 10:00:00\",\n  \"status\": true\n}"},"url":"{{baseUrl}}/registrations"}},
+      {"name":"Get registration","request":{"method":"GET","url":"{{baseUrl}}/registrations/{{id}}"}},
+      {"name":"Update registration","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"status\": false\n}"},"url":"{{baseUrl}}/registrations/{{id}}"}},
+      {"name":"Delete registration","request":{"method":"DELETE","url":"{{baseUrl}}/registrations/{{id}}"}},
+      {"name":"Get all transactions","request":{"method":"GET","url":"{{baseUrl}}/financial-transactions"}},
+      {"name":"Add transaction","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"user_id\": 1,\n  \"type\": \"activity\",\n  \"reference_id\": 1,\n  \"registered_at\": \"2026-10-01 10:00:00\",\n  \"status\": true\n}"},"url":"{{baseUrl}}/financial-transactions"}},
+      {"name":"Get transaction","request":{"method":"GET","url":"{{baseUrl}}/financial-transactions/{{id}}"}},
+      {"name":"Update transaction","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"status\": false\n}"},"url":"{{baseUrl}}/financial-transactions/{{id}}"}},
+      {"name":"Delete transaction","request":{"method":"DELETE","url":"{{baseUrl}}/financial-transactions/{{id}}"}}
+    ]},
+    {"name":"News","item":[
+      {"name":"Get all news","request":{"method":"GET","url":"{{baseUrl}}/news"}},
+      {"name":"Add news","request":{"method":"POST","body":{"mode":"formdata","formdata":[{"key":"title","value":"New Season Starts","type":"text"},{"key":"slug","value":"new-season-starts","type":"text"},{"key":"content","value":"The new season begins this October.","type":"text"},{"key":"published_at","value":"2026-10-01 09:00:00","type":"text"},{"key":"status","value":"1","type":"text"},{"key":"image","type":"file","src":""}]},"url":"{{baseUrl}}/news"}},
+      {"name":"Get news item","request":{"method":"GET","url":"{{baseUrl}}/news/{{id}}"}},
+      {"name":"Update news","request":{"method":"PUT","body":{"mode":"formdata","formdata":[{"key":"title","value":"New Season Updated","type":"text"}]},"url":"{{baseUrl}}/news/{{id}}"}},
+      {"name":"Delete news","request":{"method":"DELETE","url":"{{baseUrl}}/news/{{id}}"}}
+    ]},
+    {"name":"Pages","item":[
+      {"name":"Get all pages","request":{"method":"GET","url":"{{baseUrl}}/pages"}},
+      {"name":"Add page","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"About Us\",\n  \"slug\": \"about-us\",\n  \"content\": \"Information about St. George Sports Club.\"\n}"},"url":"{{baseUrl}}/pages"}},
+      {"name":"Get page","request":{"method":"GET","url":"{{baseUrl}}/pages/{{id}}"}},
+      {"name":"Update page","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"About the Club\"\n}"},"url":"{{baseUrl}}/pages/{{id}}"}},
+      {"name":"Delete page","request":{"method":"DELETE","url":"{{baseUrl}}/pages/{{id}}"}}
+    ]},
+    {"name":"Gallery","item":[
+      {"name":"Get all galleries","request":{"method":"GET","url":"{{baseUrl}}/galleries"}},
+      {"name":"Add gallery with images","request":{"method":"POST","body":{"mode":"formdata","formdata":[{"key":"title","value":"Annual Sports Day 2026","type":"text"},{"key":"type","value":"photo","type":"text"},{"key":"images[]","type":"file","src":""}]},"url":"{{baseUrl}}/galleries"}},
+      {"name":"Get gallery","request":{"method":"GET","url":"{{baseUrl}}/galleries/{{id}}"}},
+      {"name":"Update gallery","request":{"method":"PUT","body":{"mode":"formdata","formdata":[{"key":"title","value":"Annual Sports Day Updated","type":"text"},{"key":"images[]","type":"file","src":""}]},"url":"{{baseUrl}}/galleries/{{id}}"}},
+      {"name":"Delete gallery","request":{"method":"DELETE","url":"{{baseUrl}}/galleries/{{id}}"}},
+      {"name":"Get all gallery images","request":{"method":"GET","url":"{{baseUrl}}/gallery-images"}},
+      {"name":"Add one gallery image","request":{"method":"POST","body":{"mode":"formdata","formdata":[{"key":"gallery_id","value":"1","type":"text"},{"key":"image","type":"file","src":""}]},"url":"{{baseUrl}}/gallery-images"}},
+      {"name":"Get gallery image","request":{"method":"GET","url":"{{baseUrl}}/gallery-images/{{id}}"}},
+      {"name":"Update gallery image","request":{"method":"PUT","body":{"mode":"formdata","formdata":[{"key":"image","type":"file","src":""}]},"url":"{{baseUrl}}/gallery-images/{{id}}"}},
+      {"name":"Delete gallery image","request":{"method":"DELETE","url":"{{baseUrl}}/gallery-images/{{id}}"}}
+    ]}
+  ]
+}
