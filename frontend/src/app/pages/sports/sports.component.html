@@ -1,0 +1,54 @@
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">SPORTS MANAGEMENT</p>
+    <h1>Sports</h1>
+    <p>View every sport managed by St. George Sports Club.</p>
+  </div>
+  <button type="button" disabled title="The add-sport form will be connected next">+ Add sport</button>
+</section>
+
+@if (isLoading()) {
+  <p class="state">Loading sports…</p>
+} @else if (errorMessage()) {
+  <p class="state error">{{ errorMessage() }} <button type="button" (click)="loadSports()">Try again</button></p>
+} @else {
+  <section class="table-card">
+    <div class="table-summary">
+      <strong>All sports</strong>
+      <span>{{ result()?.total || 0 }} records</span>
+    </div>
+
+    @if ((result()?.data?.length ?? 0) > 0) {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Sport</th><th>Description</th><th>Teams</th><th>Status</th><th>Created</th></tr>
+          </thead>
+          <tbody>
+            @for (sport of result()?.data ?? []; track sport.id) {
+              <tr>
+                <td><strong>{{ sport.name }}</strong></td>
+                <td>{{ sport.description || '—' }}</td>
+                <td>{{ sport.teams?.length ?? 0 }}</td>
+                <td><span class="badge" [class.inactive]="!sport.status">{{ sport.status ? 'Active' : 'Inactive' }}</span></td>
+                <td>{{ sport.created_at | date:'dd MMM yyyy' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if ((result()?.last_page ?? 1) > 1) {
+        <nav class="pagination" aria-label="Sports pagination">
+          <button type="button" (click)="changePage((result()?.current_page ?? 1) - 1)" [disabled]="result()?.current_page === 1">Previous</button>
+          @for (page of pageNumbers(); track page) {
+            <button type="button" (click)="changePage(page)" [class.current]="page === result()?.current_page">{{ page }}</button>
+          }
+          <button type="button" (click)="changePage((result()?.current_page ?? 1) + 1)" [disabled]="result()?.current_page === result()?.last_page">Next</button>
+        </nav>
+      }
+    } @else {
+      <p class="empty">No sports have been added yet.</p>
+    }
+  </section>
+}
