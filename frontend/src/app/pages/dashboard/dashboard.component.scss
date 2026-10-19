@@ -1,0 +1,175 @@
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 22px
+}
+
+h1 {
+    margin: 0 0 7px;
+    font-size: 1.8rem
+}
+
+p {
+    margin: 0;
+    color: #6d7a90
+}
+
+.page-heading button {
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 15px;
+    background: #3373ca;
+    color: #fff;
+    font: inherit;
+    font-weight: 700
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px
+}
+
+.metrics article,
+.panel {
+    border: 1px solid #dde4ef;
+    border-radius: 10px;
+    background: #fff
+}
+
+.metrics article {
+    padding: 18px
+}
+
+.metrics span,
+.metrics small {
+    display: block;
+    color: #6c7890;
+    font-size: .85rem
+}
+
+.metrics strong {
+    display: block;
+    margin: 9px 0 5px;
+    font-size: 2rem
+}
+
+.metrics small {
+    color: #248153
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.25fr .75fr;
+    gap: 18px
+}
+
+.panel {
+    padding: 20px
+}
+
+.panel h2 {
+    margin: 0 0 15px;
+    font-size: 1.05rem
+}
+
+.event {
+    display: grid;
+    grid-template-columns: 75px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid #e6ebf3
+}
+
+.event time,
+.event span {
+    color: #6d7a90;
+    font-size: .82rem
+}
+
+.event time b {
+    color: #17243a
+}
+
+.event strong,
+.event span {
+    display: block;
+    margin-bottom: 4px
+}
+
+.event em {
+    padding: 5px 9px;
+    border-radius: 99px;
+    background: #e7f1ff;
+    color: #2b62ab;
+    font-size: .75rem;
+    font-style: normal
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px
+}
+
+.actions button {
+    min-height: 92px;
+    padding: 12px;
+    border: 1px solid #dfe5ef;
+    border-radius: 8px;
+    background: #f9fbff;
+    color: #263b5b;
+    text-align: left;
+    font: inherit;
+    font-weight: 700
+}
+
+@media(max-width:900px) {
+    .metrics {
+        grid-template-columns: 1fr 1fr
+    }
+
+    .grid {
+        grid-template-columns: 1fr
+    }
+}
+
+@media(max-width:520px) {
+    .page-heading {
+        align-items: start;
+        gap: 14px;
+        flex-direction: column
+    }
+
+    .metrics,
+    .actions {
+        grid-template-columns: 1fr
+    }
+}
+
+.state,
+.empty {
+    margin: 0 0 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #e9f2ff;
+    color: #295b9b;
+    font-size: .9rem
+}
+
+.state.error {
+    background: #fff0ed;
+    color: #a73f27
+}
+
+.state button {
+    margin-left: 8px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-weight: 700;
+    cursor: pointer
+}

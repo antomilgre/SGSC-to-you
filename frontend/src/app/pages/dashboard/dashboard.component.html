@@ -1,0 +1,23 @@
+<section class="page-heading">
+  <div><h1>Club overview</h1><p>One place to monitor sporting, membership, and content operations.</p></div>
+  <button>+ Create event</button>
+</section>
+
+@if (isLoading()) { <p class="state">Loading dashboard data…</p> }
+@if (errorMessage()) { <p class="state error">{{ errorMessage() }} <button (click)="loadDashboard()">Try again</button></p> }
+
+<section class="metrics">
+  @for (metric of metrics(); track metric.label) {
+    <article><span>{{ metric.label }}</span><strong>{{ metric.value }}</strong><small>{{ metric.note }}</small></article>
+  }
+</section>
+
+<section class="grid">
+  <article class="panel">
+    <h2>Upcoming events</h2>
+    @for (event of overview()?.events ?? []; track event.id) {
+      <div class="event"><time>{{ event.event_date | date:'dd MMM' | uppercase }}<br><b>{{ event.event_time || 'TBA' }}</b></time><div><strong>{{ event.title }}</strong><span>{{ event.location || 'Location TBA' }} · {{ event.sport?.name || 'Club event' }}</span></div><em>{{ event.status }}</em></div>
+    } @empty { <p class="empty">No upcoming events yet.</p> }
+  </article>
+  <article class="panel"><h2>Quick actions</h2><div class="actions"><button>Review applications</button><button>Add gallery</button><button>Add player</button><button>Publish news</button></div></article>
+</section>
